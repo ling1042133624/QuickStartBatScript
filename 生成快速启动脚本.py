@@ -105,6 +105,7 @@ class QuickStartBatScript(QWidget):
         :return:
         """
         cmd = "@echo off\n"
+        cmd = self.get_cmd(cmd)
         self.write_cmds(cmd, "w")
 
     def append_bat(self):
@@ -113,20 +114,28 @@ class QuickStartBatScript(QWidget):
         :return:
         """
         cmd = self.get_cmd()
-
         self.write_cmds(cmd, "a")
 
     def write_cmds(self, cmd, mode):
 
         file_path = str(get_desktop()) + "\%s" % \
                     (self.bat_name_lineEdit.text() + ".bat" if self.bat_name_lineEdit.text() else "一键启动最近文件.bat")
-        ok = self.if_file_exites(file_path)
 
-        file_path = file_path if not ok else file_path[:-4] + "(1)" + file_path[-4:]
-
+        file_path = self.get_file_path(file_path)
         with open(file_path, mode) as f:
             f.writelines(cmd)
         self.notify_box()
+
+    def get_file_path(self, file_path):
+        ok = self.if_file_exites(file_path)
+
+        file_path = file_path if not ok else file_path[:-4] + "(1)" + file_path[-4:]
+        ok = self.if_file_exites(file_path)
+        if not ok:
+            return file_path
+        else:
+
+            return self.get_file_path(file_path)
 
     def get_cmd(self, cmd=""):
         """
