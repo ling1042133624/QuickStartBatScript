@@ -124,7 +124,7 @@ class QuickStartBatScript(QWidget):
         file_path = self.get_file_path(file_path)
         with open(file_path, mode) as f:
             f.writelines(cmd)
-        self.notify_box()
+        self.notify_box(file_path)
 
     def get_file_path(self, file_path):
         ok = self.if_file_exites(file_path)
@@ -219,14 +219,11 @@ class QuickStartBatScript(QWidget):
         elif messageBox1.clickedButton() == btnN:
             self.special_open_modes_list.append("")
 
-    def notify_box(self):
+    def notify_box(self,file_path):
         messageBox = QMessageBox()
         # createWindow(messageBox, "blueGreen")
         messageBox.setWindowTitle('提示')
-        messageBox.setText('已经生成好脚本了~\n'
-                            '在 %s' % (get_desktop()) + "\%s" % (
-                                self.bat_name_lineEdit.text() + ".bat" if self.bat_name_lineEdit.text() else "一键启动最近文件.bat")
-                            )
+        messageBox.setText(file_path)
         messageBox.setStandardButtons(QMessageBox.Ok)
         messageBox.exec_()
 
