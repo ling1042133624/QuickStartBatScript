@@ -14,4 +14,4 @@
     
     追加脚本是在指定的脚本名下追加打开的栏目
 
-# 要用生成pyinstaller生成exe，要把修饰器colorful注释掉。。有配置文件依赖，有点麻烦
+# 要用pyinstaller生成exe，把修饰器colorful注释掉。有配置文件依赖，有点麻烦
